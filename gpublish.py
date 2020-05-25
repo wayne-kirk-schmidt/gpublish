@@ -5,6 +5,7 @@
 Explanation:
 
 This script is a general publisher of content to a Google Drive.
+
 Designed to work with an Oauth token, please refer to documents
 on how to set up a token and use specific SCOPES
 
@@ -38,11 +39,7 @@ import mymimetypes
 sys.dont_write_bytecode = 1
 
 PARSER = argparse.ArgumentParser(description="""
-
-This is a general publisher for documents to a Google drive.
-By default this uploads content, exports it to a Google 
-format, and then exports file contents to a PDF file.
-
+A multi output publisher for documents to a Google drive.
 """)
 
 PARSER.add_argument('-c', metavar='<creds>', dest='creds', help='specify secret file')
