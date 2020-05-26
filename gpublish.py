@@ -31,9 +31,11 @@ import argparse
 import datetime
 import sys
 import os
+import pickle
 import apiclient
-from httplib2 import Http
-from oauth2client import file, client, tools
+import google
+import googleapiclient
+import google_auth_oauthlib
 import mymimetypes
 
 sys.dont_write_bytecode = 1
@@ -61,6 +63,7 @@ if ARGS.token:
     os.environ['TOKENFILE'] = ARGS.token
 if ARGS.file:
     os.environ['TARGETFILE'] = ARGS.file
+    os.environ['TARGETNAME'] = os.path.basename(ARGS.file)
 if ARGS.dir:
     os.environ['TARGETDIR'] = ARGS.dir
 
@@ -68,11 +71,12 @@ try:
     CREDENTIALS = os.environ['CREDENTIALS']
     TOKENFILE = os.environ['TOKENFILE']
     TARGETFILE = os.environ['TARGETFILE']
+    TARGETNAME = os.environ['TARGETNAME']
     TARGETDIR = os.environ['TARGETDIR']
 except KeyError as myerror:
     print('Environment Variable Not Set :: {} '.format(myerror.args[0]))
 
-SCOPES = ('https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets')
+SCOPES = ('https://www.googleapis.com/auth/drive')
 
 def move_output_pdf(service, id_, folder_id):
     """
@@ -84,6 +88,9 @@ def move_output_pdf(service, id_, folder_id):
         addParents=folder_id,
         removeParents=file_['parents'][0],
         fields='id,parents').execute()
+    if ARGS.verbose:
+        print('Source_FileID: %s' % id_)
+        print('Target_FolderID: %s' % folder_id)
 
 def create_target_dir(service):
     """
@@ -92,20 +99,29 @@ def create_target_dir(service):
     dir_metadata = {'name': TARGETDIR, 'mimeType': 'application/vnd.google-apps.folder'}
     directory_result = service.files().create(body=dir_metadata, fields='id').execute()
     folder_id = directory_result.get('id')
-    print('Folder ID: %s' % folder_id)
+    if ARGS.verbose:
+        print('FolderID: %s' % folder_id)
     return folder_id
 
 def create_auth():
     """
     Fetch or create the credentials used to create the service
     """
-    store = file.Storage(TOKENFILE)
-    creds = store.get()
-    if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets(CREDENTIALS, SCOPES)
-        creds = tools.run_flow(flow, store)
-        service = apiclient.discovery.build('drive', 'v3', http=creds.authorize(Http()))
-    service = apiclient.discovery.build('drive', 'v3', credentials=creds)
+    if os.path.exists(TOKENFILE):
+        with open(TOKENFILE, 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(google.auth.transport.requests.Request())
+        else:
+            flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
+                CREDENTIALS, SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open(TOKENFILE, 'wb') as token:
+            pickle.dump(creds, token)
+    service = googleapiclient.discovery.build('drive', 'v3', credentials=creds)
     return service
 
 def define_mime_types():
@@ -121,39 +137,44 @@ def upload_native_file(service, folder_id, src_mime):
     """
     Upload the native file to the parent directory
     """
-    file_metadata = {'name': TARGETFILE, 'parents': [folder_id]}
-    media = apiclient.http.MediaFileUpload(TARGETFILE, mimetype=src_mime)
+    file_metadata = {'name': TARGETNAME, 'parents': [folder_id]}
+    media = googleapiclient.http.MediaFileUpload(TARGETFILE, mimetype=src_mime)
     native_file_result = service.files().create(
         body=file_metadata, media_body=media, fields='id'
         ).execute()
     native_file_id = native_file_result.get('id')
-    print('Native File ID: %s' % native_file_id)
+    if ARGS.verbose:
+        print('Native_FileID: %s' % native_file_id)
 
 def upload_google_file(service, folder_id, src_mime, dst_mime):
     """
     Upload the google equivalent of the native file to the parent directory
     """
-    file_metadata = {'name': TARGETFILE, 'mimeType': dst_mime, 'parents': [folder_id]}
-    media = apiclient.http.MediaFileUpload(TARGETFILE, resumable=True, mimetype=src_mime)
+    file_metadata = {'name': TARGETNAME, 'mimeType': dst_mime, 'parents': [folder_id]}
+    media = googleapiclient.http.MediaFileUpload(TARGETFILE, resumable=True, mimetype=src_mime)
     google_file_result = service.files().create(
         body=file_metadata, media_body=media, fields='id'
         ).execute()
     google_file_id = google_file_result.get('id')
-    print('Google File ID: %s' % google_file_id)
+    if ARGS.verbose:
+        print('Google_FileID: %s' % google_file_id)
     return google_file_id
 
 def convert_file_to_pdf(service, folder_id, google_file_id):
     """
     Create the PDF file and then move from the base directory to the target directory
     """
-    file_name = os.path.splitext(TARGETFILE)[0]
+    file_name = os.path.splitext(TARGETNAME)[0]
     targetpdf = file_name + ".pdf"
     pdf_mime = mymimetypes.MIMETYPES["pdf"]
     data = service.files().export(fileId=google_file_id, mimeType=pdf_mime).execute()
     body = {'name':targetpdf, 'mimeType':pdf_mime}
-    file_handle = apiclient.http.BytesIO(data)
-    media_body = apiclient.http.MediaIoBaseUpload(file_handle, mimetype=pdf_mime)
+    file_handle = googleapiclient.http.BytesIO(data)
+    media_body = googleapiclient.http.MediaIoBaseUpload(file_handle, mimetype=pdf_mime)
     pdf_file_id = service.files().create(body=body, media_body=media_body).execute()['id']
+    if ARGS.verbose:
+        print('DstPDF_FileID: %s' % pdf_file_id)
+       
     move_output_pdf(service, pdf_file_id, folder_id)
 
 def main():
