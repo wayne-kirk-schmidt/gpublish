@@ -65,6 +65,8 @@ Getting this set up
 
 CAUTION: Please note that the SCOPE is for the Gdrive which means read and write access.
 
+[Specific Google Setup Steps](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/GSETUP.md)
+
 Dependencies
 ============
 
