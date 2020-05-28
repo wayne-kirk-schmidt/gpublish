@@ -26,15 +26,14 @@ Google Specific Preparatory Work
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.004.png) |
 |                                                                                              |
 | Step-005: Click on the project from the completion activity screen.                          |
-|           Click on view, the click on "API Overview", and then "Enable APIS and Services"    |
 |                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.005.png) |
 |                                                                                              |
-| Step-006:                                                                                    |
+| Step-006: Click on view, the click on "API Overview"                                         |
 |                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.006.png) |
 |                                                                                              |
-| Step-007:                                                                                    |
+| Step-007: Then click on then click on "Enable APIS and Services"                             |
 |                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.007.png) |
 |                                                                                              |
