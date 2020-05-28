@@ -7,11 +7,17 @@ Google Specific Preparatory Work
 
 | *Step Descrription or Picture*                                                               |
 |:---------------------------------------------------------------------------------------------|
-| Step-001:                                                                                    |
+|                                                                                              |
+| Step-001:  Next visit this view API status. https://console.developers.google.com/           |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.001.png) |
-| Step-002:                                                                                    |
+|                                                                                              |
+| Step-002:  Click on the three dots to the right of "Google APIS"                             |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.002.png) |
-| Step-003:                                                                                    |
+|                                                                                              |
+| Step-003:  You should see all projects with your organization. Click "Create Project"        |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.003.png) |
 | Step-004:                                                                                    |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.004.png) |
