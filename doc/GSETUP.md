@@ -19,44 +19,83 @@ Google Specific Preparatory Work
 | Step-003:  You should see all projects with your organization. Click "Create Project"        |
 |                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.003.png) |
-| Step-004:                                                                                    |
+|                                                                                              |
+| Step-004: Now specify a name for the project "gPublisher". specify a location. hit create.   |                                             |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.004.png) |
+|                                                                                              |
 | Step-005:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.005.png) |
+|                                                                                              |
 | Step-006:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.006.png) |
+|                                                                                              |
 | Step-007:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.007.png) |
+|                                                                                              |
 | Step-008:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.008.png) |
+|                                                                                              |
 | Step-009:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.009.png) |
+|                                                                                              |
 | Step-010:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.010.png) |
+|                                                                                              |
 | Step-011:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.011.png) |
+|                                                                                              |
 | Step-012:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.012.png) |
+|                                                                                              |
 | Step-013:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.013.png) |
+|                                                                                              |
 | Step-014:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.014.png) |
+|                                                                                              |
 | Step-015:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.015.png) |
+|                                                                                              |
 | Step-016:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.016.png) |
+|                                                                                              |
 | Step-017:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.017.png) |
+|                                                                                              |
 | Step-018:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.018.png) |
+|                                                                                              |
 | Step-019:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.019.png) |
+|                                                                                              |
 | Step-020:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.020.png) |
+|                                                                                              |
 | Step-021:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.021.png) |
+|                                                                                              |
 | Step-022:                                                                                    |
+|                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.022.png) |
+|                                                                                              |
 
 License
 =======
