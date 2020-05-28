@@ -6,7 +6,7 @@ Google Specific Preparatory Work
 [Getting Started](https://support.google.com/googleapi/answer/6158841?hl=en)
 
 | *Step Descrription or Picture*                                                               |
-|:--------------------------------------------------------------------------------------------:|
+|:---------------------------------------------------------------------------------------------|
 | Step-001:                                                                                    |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.001.png) |
 | Step-002:                                                                                    |
