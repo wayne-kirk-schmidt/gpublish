@@ -21,11 +21,12 @@ Google Specific Preparatory Work
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.003.png) |
 |                                                                                              |
 | Step-004: Now specify a name for the project "gPublisher". specify a location. hit create.   |                                             |
-|           After a short time you should see the creation event and other recent events.      |
+|            After a short time you should see the creation event and other recent events.     |
 |                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.004.png) |
 |                                                                                              |
-| Step-005:                                                                                    |
+| Step-005: Click on the project from the completion activity screen.                          |
+|           Click on view, the click on "API Overview", and then "Enable APIS and Services"    |
 |                                                                                              |
 | ![](https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.005.png) |
 |                                                                                              |
