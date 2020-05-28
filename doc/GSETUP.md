@@ -5,28 +5,28 @@ Google Specific Preparatory Work
 
 | *Number* | *Picture*                                                             |
 |:--------:|:--------------------------------------------------------------------- |
-| 001      | (pictures/gsetup.step.001.png) |
-| 002      | (pictures/gsetup.step.002.png) |
-| 003      | (pictures/gsetup.step.003.png) |
-| 004      | (pictures/gsetup.step.004.png) |
-| 005      | (pictures/gsetup.step.005.png) |
-| 006      | (pictures/gsetup.step.006.png) |
-| 007      | (pictures/gsetup.step.007.png) |
-| 008      | (pictures/gsetup.step.008.png) |
-| 009      | (pictures/gsetup.step.009.png) |
-| 010      | (pictures/gsetup.step.010.png) |
-| 011      | (pictures/gsetup.step.011.png) |
-| 012      | (pictures/gsetup.step.012.png) |
-| 013      | (pictures/gsetup.step.013.png) |
-| 014      | (pictures/gsetup.step.014.png) |
-| 015      | (pictures/gsetup.step.015.png) |
-| 016      | (pictures/gsetup.step.016.png) |
-| 017      | (pictures/gsetup.step.017.png) |
-| 018      | (pictures/gsetup.step.018.png) |
-| 019      | (pictures/gsetup.step.019.png) |
-| 010      | (pictures/gsetup.step.020.png) |
-| 021      | (pictures/gsetup.step.021.png) |
-| 022      | (pictures/gsetup.step.022.png) |
+| 001      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.001.png)
+| 002      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.002.png)
+| 003      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.003.png)
+| 004      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.004.png)
+| 005      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.005.png)
+| 006      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.006.png)
+| 007      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.007.png)
+| 008      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.008.png)
+| 009      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.009.png)
+| 010      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.010.png)
+| 011      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.011.png)
+| 012      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.012.png)
+| 013      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.013.png)
+| 014      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.014.png)
+| 015      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.015.png)
+| 016      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.016.png)
+| 017      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.017.png)
+| 018      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.018.png)
+| 019      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.019.png)
+| 020      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.020.png)
+| 021      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.021.png)
+| 022      | (https://github.com/wks-sumo-logic/gpublish/blob/master/doc/pictures/gsetup.step.022.png)
 
 License
 =======
