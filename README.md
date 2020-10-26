@@ -30,11 +30,9 @@ The steps are as follows:
     
         sudo -H pip3 install pipenv 
  
-    5. Clone this repo using the following command:
-    
-       git clone git@github.com:wks-sumo-logic/gpublish.git
+    5. Clone this repository. This will create a new folder
 
-    NOTE: I also maintain the main reposittory here as well
+    NOTE: I also maintain the main repository here as well
 
        git@github.com:wayne-kirk-schmidt/google-publish-tools.git
 
