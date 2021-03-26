@@ -8,6 +8,7 @@ pyinstaller = "*"
 
 [packages]
 apiclient = "*"
+rsa = ">=4.1"
 argparse = "*"
 configparser = "*"
 datetime = "*"
