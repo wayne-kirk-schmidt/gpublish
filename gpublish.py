@@ -5,7 +5,6 @@
 Explanation:
 
 This script is a general publisher of content to a Google Drive.
-
 Designed to work with an Oauth token, please refer to documents
 on how to set up a token and use specific SCOPES
 
@@ -27,21 +26,26 @@ Style:
 __version__ = '1.0.0'
 __author__ = "Wayne Schmidt (wayne.kirk.schmidt@gmail.com)"
 
-import argparse
-import datetime
+
 import sys
 import os
-import pickle
 import apiclient
+import pickle
 import google
-import googleapiclient
 import google_auth_oauthlib
+import googleapiclient
+import argparse
+import datetime
 import mymimetypes
 
 sys.dont_write_bytecode = 1
 
 PARSER = argparse.ArgumentParser(description="""
-A multi output publisher for documents to a Google drive.
+
+This is a general publisher for documents to a Google drive.
+By default this uploads content, exports it to a Google 
+format, and then exports file contents to a PDF file.
+
 """)
 
 PARSER.add_argument('-c', metavar='<creds>', dest='creds', help='specify secret file')
@@ -60,7 +64,7 @@ LSTAMP = DSTAMP + '.' + TSTAMP
 if ARGS.creds:
     os.environ['CREDENTIALS'] = ARGS.creds
 if ARGS.token:
-    os.environ['TOKENFILE'] = ARGS.token
+    os.environ['TOKENPICKLE'] = ARGS.token
 if ARGS.file:
     os.environ['TARGETFILE'] = ARGS.file
     os.environ['TARGETNAME'] = os.path.basename(ARGS.file)
@@ -69,7 +73,7 @@ if ARGS.dir:
 
 try:
     CREDENTIALS = os.environ['CREDENTIALS']
-    TOKENFILE = os.environ['TOKENFILE']
+    TOKENPICKLE = os.environ['TOKENPICKLE']
     TARGETFILE = os.environ['TARGETFILE']
     TARGETNAME = os.environ['TARGETNAME']
     TARGETDIR = os.environ['TARGETDIR']
@@ -103,12 +107,14 @@ def create_target_dir(service):
         print('FolderID: %s' % folder_id)
     return folder_id
 
+
 def create_auth():
     """
     Fetch or create the credentials used to create the service
     """
-    if os.path.exists(TOKENFILE):
-        with open(TOKENFILE, 'rb') as token:
+
+    if os.path.exists(TOKENPICKLE):
+        with open(TOKENPICKLE, 'rb') as token:
             creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
@@ -119,8 +125,9 @@ def create_auth():
                 CREDENTIALS, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open(TOKENFILE, 'wb') as token:
+        with open(TOKENPICKLE, 'wb') as token:
             pickle.dump(creds, token)
+
     service = googleapiclient.discovery.build('drive', 'v3', credentials=creds)
     return service
 
@@ -138,7 +145,7 @@ def upload_native_file(service, folder_id, src_mime):
     Upload the native file to the parent directory
     """
     file_metadata = {'name': TARGETNAME, 'parents': [folder_id]}
-    media = googleapiclient.http.MediaFileUpload(TARGETFILE, mimetype=src_mime)
+    media = apiclient.http.MediaFileUpload(TARGETFILE, mimetype=src_mime)
     native_file_result = service.files().create(
         body=file_metadata, media_body=media, fields='id'
         ).execute()
@@ -151,7 +158,7 @@ def upload_google_file(service, folder_id, src_mime, dst_mime):
     Upload the google equivalent of the native file to the parent directory
     """
     file_metadata = {'name': TARGETNAME, 'mimeType': dst_mime, 'parents': [folder_id]}
-    media = googleapiclient.http.MediaFileUpload(TARGETFILE, resumable=True, mimetype=src_mime)
+    media = apiclient.http.MediaFileUpload(TARGETFILE, resumable=True, mimetype=src_mime)
     google_file_result = service.files().create(
         body=file_metadata, media_body=media, fields='id'
         ).execute()
@@ -169,12 +176,12 @@ def convert_file_to_pdf(service, folder_id, google_file_id):
     pdf_mime = mymimetypes.MIMETYPES["pdf"]
     data = service.files().export(fileId=google_file_id, mimeType=pdf_mime).execute()
     body = {'name':targetpdf, 'mimeType':pdf_mime}
-    file_handle = googleapiclient.http.BytesIO(data)
-    media_body = googleapiclient.http.MediaIoBaseUpload(file_handle, mimetype=pdf_mime)
+    file_handle = apiclient.http.BytesIO(data)
+    media_body = apiclient.http.MediaIoBaseUpload(file_handle, mimetype=pdf_mime)
     pdf_file_id = service.files().create(body=body, media_body=media_body).execute()['id']
     if ARGS.verbose:
         print('DstPDF_FileID: %s' % pdf_file_id)
-       
+
     move_output_pdf(service, pdf_file_id, folder_id)
 
 def main():
