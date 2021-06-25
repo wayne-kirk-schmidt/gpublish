@@ -5,18 +5,17 @@
 Explanation:
 
 This script is a general publisher of content to a Google Drive.
-
 Designed to work with an Oauth token, please refer to documents
 on how to set up a token and use specific SCOPES
 
 Usage:
-    $ python  gmkdirp [ options ]
+    $ python  gmkdir [ options ]
 
 Style:
     Google Python Style Guide:
     http://google.github.io/styleguide/pyguide.html
 
-    @name           gmkdirp
+    @name           gmkdir
     @version        1.0.0
     @author-name    Wayne Schmidt
     @author-email   wayne.kirk.schmidt@gmail.com
@@ -27,27 +26,29 @@ Style:
 __version__ = '1.0.0'
 __author__ = "Wayne Schmidt (wayne.kirk.schmidt@gmail.com)"
 
-import argparse
-import datetime
-import re
 import sys
 import os
-import pickle
 import apiclient
+import pickle
 import google
-import googleapiclient
 import google_auth_oauthlib
+import googleapiclient
+import argparse
+import datetime
 
 sys.dont_write_bytecode = 1
 
 PARSER = argparse.ArgumentParser(description="""
-A multi output publisher for documents to a Google drive.
+
+This is a general publisher for documents to a Google drive.
+By default this uploads content, exports it to a Google 
+format, and then exports file contents to a PDF file.
+
 """)
 
 PARSER.add_argument('-c', metavar='<creds>', dest='creds', help='specify secret file')
 PARSER.add_argument('-t', metavar='<token>', dest='token', help='specify token file')
 PARSER.add_argument('-d', metavar='<dir>', dest='dir', help='specify target directory')
-PARSER.add_argument('-p', metavar='<parent>', dest='parent', help='specify parent directory')
 PARSER.add_argument('-v', '--verbose', help='verbose', action="store_true")
 
 ARGS = PARSER.parse_args()
@@ -60,27 +61,55 @@ LSTAMP = DSTAMP + '.' + TSTAMP
 if ARGS.creds:
     os.environ['CREDENTIALS'] = ARGS.creds
 if ARGS.token:
-    os.environ['TOKENFILE'] = ARGS.token
+    os.environ['TOKENPICKLE'] = ARGS.token
 if ARGS.dir:
     os.environ['TARGETDIR'] = ARGS.dir
 
 try:
     CREDENTIALS = os.environ['CREDENTIALS']
-    TOKENFILE = os.environ['TOKENFILE']
+    TOKENPICKLE = os.environ['TOKENPICKLE']
     TARGETDIR = os.environ['TARGETDIR']
-
 except KeyError as myerror:
     print('Environment Variable Not Set :: {} '.format(myerror.args[0]))
 
-SCOPES = ('https://www.googleapis.com/auth/drive')
+SCOPES = ('https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/spreadsheets')
+
+def move_target_file(service, id_, folder_id):
+    """
+    Moving a file in Google Drive means assigning the correct parents
+    """
+    file_ = service.files().get(fileId=id_, fields='parents').execute()
+    service.files().update(
+        fileId=id_,
+        addParents=folder_id,
+        removeParents=file_['parents'][0],
+        fields='id,parents').execute()
+    if ARGS.verbose:
+        print('Moved FolderID: %s' % folder_id)
+        print('To ParentID: %s' % id_)
+
+def create_target_dir(service, targetname, parent_id):
+    """
+    Create the target directory to store the files
+    """
+    dir_metadata = {'name': targetname, 'mimeType': 'application/vnd.google-apps.folder'}
+    directory_result = service.files().create(body=dir_metadata, fields='id').execute()
+    folder_id = directory_result.get('id')
+    if ARGS.verbose:
+        print('Created FolderID: %s' % folder_id)
+    if parent_id != "undefined":
+        move_target_file(service, parent_id, folder_id)
+    return folder_id
 
 def create_auth():
     """
     Fetch or create the credentials used to create the service
     """
-    if os.path.exists(TOKENFILE):
-        with open(TOKENFILE, 'rb') as token:
+
+    if os.path.exists(TOKENPICKLE):
+        with open(TOKENPICKLE, 'rb') as token:
             creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(google.auth.transport.requests.Request())
@@ -89,100 +118,41 @@ def create_auth():
                 CREDENTIALS, SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open(TOKENFILE, 'wb') as token:
+        with open(TOKENPICKLE, 'wb') as token:
             pickle.dump(creds, token)
-    service = googleapiclient.discovery.build('drive', 'v3', credentials=creds)
 
+    service = googleapiclient.discovery.build('drive', 'v3', credentials=creds)
     return service
 
-def create_target_dir(service, pathname, parentid):
+def split_target_path(targetpath):
     """
-    Create the target directory to store the files
+    This subroutine splits an array into component parts, this returns an array
     """
-    dir_metadata = {
-        'name': pathname,
-        'parents' : [parentid],
-        'mimeType': 'application/vnd.google-apps.folder'
-    }
-    child = service.files().create(body=dir_metadata, \
-                                      fields='id,name,parents').execute()
-    my_name = child['name']
-    my_id = child['id']
-    my_parent = child['parents'][0]
-
-    if ARGS.verbose:
-        print('Folder_ID: %s' % my_id)
-        print('Folder_Name: %s' % my_name)
-        print('Folder_Parent_ID: %s' % my_parent)
-
-    return (my_name, my_id, my_parent)
-
-def calculate_parent(service, parentname):
-    """
-    Calculate or search for base directory
-    """
-    if parentname == 'myrootdrive':
-        file_metadata = {
-            'name': parentname + LSTAMP,
-            'mimeType': 'application/vnd.google-apps.folder'
-        }
-        temp_id = service.files().create(body=file_metadata, \
-                                              fields='id').execute()["id"]
-        my_drive_id = service.files().get(fileId=temp_id, \
-                                        fields='parents').execute()["parents"][0]
-        service.files().delete(fileId=temp_id).execute()
-
-        my_name = 'mydrive'
-        my_id = my_drive_id
-        my_parent = my_drive_id
-
-    else:
-        children = service.files().list(q="mimeType='application/vnd.google-apps.folder' \
-                                        and name='"+parentname+"'", spaces='drive', \
-                                        fields='nextPageToken, \
-                                        files(id, name, parents)').execute()
-        for child in children['files']:
-            my_name = child['name']
-            my_id = child['id']
-            my_parent = child['parents'][0]
-
-    return (my_name, my_id, my_parent)
-
-def split_into_path_list(target_path):
-    """
-    split targetpath into specifiic parts
-    """
-    path_delimiters = '/', '\\'
-    path_regex = '|'.join(map(re.escape, path_delimiters))
-    path_list = re.split(path_regex, target_path, 0)
-
-    return path_list
+    path_element_array = []
+    while 1:
+        path_elements = os.path.split(targetpath)
+        if path_elements[0] == targetpath:  # sentinel for absolute paths
+            path_element_array.insert(0, path_elements[0])
+            break
+        elif path_elements[1] == targetpath: # sentinel for relative paths
+            path_element_array.insert(0, path_elements[1])
+            break
+        else:
+            targetpath = path_elements[0]
+            path_element_array.insert(0, path_elements[1])
+    return path_element_array
 
 def main():
     """
     This is the main lodule for authentication, and file operations
     """
     (service) = create_auth()
-
-    path_list = list()
-    parentname = 'myrootdrive'
-    if ARGS.parent:
-        parentname = ARGS.parent
-    path_list.append(parentname)
-
-    (base_name, base_id, base_parent_id) = calculate_parent(service, parentname)
-    parent_id = base_id
-
-    if ARGS.verbose:
-        print('Beginning_ID: %s' % base_id)
-        print('Beginning_Folder_Name: %s' % base_name)
-        print('Beginning_Folder_Parent_ID: %s' % base_parent_id)
-
-    for path_item in split_into_path_list(os.environ['TARGETDIR']):
+    path_element_array = split_target_path(TARGETDIR)
+    parent_id = "undefined"
+    for direlement in reversed(path_element_array):
         if ARGS.verbose:
-            print('CURRENT_Parent_ID: %s' % parent_id)
-        (_item_name, item_id, _item_parent) = create_target_dir(service, path_item, parent_id)
-        parent_id = item_id
+            print('Creating: %s' % direlement)
+        parent_id = create_target_dir(service, direlement, parent_id)
 
 if __name__ == '__main__':
     main()
