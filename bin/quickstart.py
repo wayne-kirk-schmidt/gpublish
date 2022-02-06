@@ -12,9 +12,16 @@ Usage:
 Style:
     Google Python Style Guide:
     http://google.github.io/styleguide/pyguide.html
+
+    @name           quickstart.py
+    @version        1.5.0
+    @author-name    Wayne Schmidt
+    @author-email   wayne.kirk.schmidt@gmail.com
+    @license-name   Apache
+    @license-url    https://www.apache.org/licenses/LICENSE-2.0
 """
 
-__version__ = '1.0.0'
+__version__ = '1.5.0'
 __author__ = "Wayne Schmidt (wayne.kirk.schmidt@gmail.com)"
 
 import sys

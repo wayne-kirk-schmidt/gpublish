@@ -12,19 +12,19 @@ Installing the Project
 ======================
 
 The scripts are command line based, designed to be used within a batch script or DevOPs tool.
-All are python3 scripts. The complete list of the python modules are listed in a Pipfile for install.
+The complete list of the python modules are listed in a Pipfile for install.
 
 You will need to use Python 3.6 or higher and the modules listed in the dependency section.  
 
 The steps are as follows: 
 
-    1. Download and install python 3.6 or higher from python.org. Append python3 to the LIB and PATH env.
+    1. Install python 3.6 or higher from python.org. Append python3 to the LIB and PATH env.
 
     2. Download and install git for your platform if you don't already have it installed.
        It can be downloaded from https://git-scm.com/downloads
     
-    3. Open a new shell/command prompt. It must be new since only a new shell will include the new python 
-       path that was created in step 1. Cd to the folder where you want to install the scripts.
+    3. Open a new shell/command prompt, so it will reflect the new python path configured in step 1.
+       cd to the folder where you want to install the scripts.
     
     4. Execute the following command to install pipenv, which will manage all of the library dependencies:
     
@@ -32,12 +32,6 @@ The steps are as follows:
  
     5. Clone this repository. This will create a new folder
 
-    NOTE: I also maintain the main repository here as well
-
-       git@github.com:wayne-kirk-schmidt/google-publish-tools.git
-
-    This will create a new folder gpublish
-    
     6. Change into the folder. Type the following to install all the package dependencies 
        (this may take a while as this will download all of the libraries that it uses):
 
@@ -49,7 +43,6 @@ Getting this set up
     1. The first thing to do is to enable the Google Drive API
 
 [Enable-Google-Drive-API](https://developers.google.com/drive/api/v3/enable-drive-api)
-
 
     2. The next thing to do is to configure the quickstart for the Google Drive API
 
@@ -115,14 +108,16 @@ To Do List:
 License
 =======
 
-Copyright 2020 Wayne Kirk Schmidt
+Copyright 2020, 2022 Wayne Kirk Schmidt
+https://www.linkedin.com/in/waynekirkschmidt
 
-Licensed under the GNU GPL License (the "License");
-you may not use this file except in compliance with the License.
+Licensed under the Apache 2.0 License (the "License");
+
+You may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-    license-name   GNU GPL
-    license-url    http://www.gnu.org/licenses/gpl.html
+    license-name   APACHE 2.0
+    license-url    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
