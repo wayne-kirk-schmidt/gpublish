@@ -1,17 +1,16 @@
-
 Google Publish
 ==============
 
-This is a collection of tools to demonstrate how to use the Google Drive via the API.
+These command line tools are wrappers aorund the Google Drive API to help DevOps.
 
-The first tool starts with download, upload, and conversion, as well as moving files.
+In this toolbox we have tools to download, upload, move files as well as convert formats.
 
-As this repository grows, we will make more DevOps friendly tools handle single tasks.
+As this repository grows, we will add more DevOps friendly tools handle single tasks.
 
 Installing the Project
 ======================
 
-The scripts are command line based, designed to be used within a batch script or DevOPs tool.
+All of these scriopts are command line based, designed to be used within a batch script or DevOPs tool.
 The complete list of the python modules are listed in a Pipfile for install.
 
 You will need to use Python 3.6 or higher and the modules listed in the dependency section.  
