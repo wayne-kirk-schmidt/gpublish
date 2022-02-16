@@ -35,6 +35,7 @@ import datetime
 import google
 import google_auth_oauthlib
 import googleapiclient
+import googleapiclient.discovery
 import apiclient
 import mymimetypes
 

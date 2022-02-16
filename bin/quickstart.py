@@ -31,6 +31,7 @@ import apiclient
 import google
 import google_auth_oauthlib
 import googleapiclient
+import googleapiclient.discovery
 
 sys.dont_write_bytecode = 1
 
