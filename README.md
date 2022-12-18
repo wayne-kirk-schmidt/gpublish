@@ -10,7 +10,7 @@ As this repository grows, we will add more DevOps friendly tools handle single t
 Installing the Project
 ======================
 
-All of these scriopts are command line based, designed to be used within a batch script or DevOPs tool.
+All of these scripts are command line based, designed to be used within a batch script or DevOPs tool.
 The complete list of the python modules are listed in a Pipfile for install.
 
 You will need to use Python 3.6 or higher and the modules listed in the dependency section.  
